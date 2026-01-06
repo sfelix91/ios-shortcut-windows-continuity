@@ -63,6 +63,20 @@ This provides immediate feedback that the content is now available and ready to 
 
 ---
 
+## Screenshots
+
+### Shortcut structure
+<p align="center">
+  <img src="images/shortcut_clipboad_structure.jpeg" width="300" alt="iOS Shortcut structure"/>
+</p>
+
+### Clipboard confirmation
+<p align="center">
+  <img src="images/clipboad_confirmation.jpeg" width="300" alt="Clipboard confirmation on iPhone"/>
+</p>
+
+---
+
 ## Design rationale
 
 - No servers or network services  
