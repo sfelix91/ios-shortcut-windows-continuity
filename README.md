@@ -19,19 +19,17 @@ The solution focuses on minimizing interaction cost and cognitive load, allowing
 The solution is intentionally split into two simple and independent parts: Windows and iPhone.
 
 ### Windows side
-On Windows, the workflow is driven entirely by keyboard shortcuts:
+On Windows, the continuity experience is enabled through a minimal automation layer built with AutoHotkey and PowerShell.
 
-- `Ctrl + C`  
-  Copies text normally, preserving default system behavior.
+#### Flow overview
+The user copies text normally using Ctrl + C
+Pressing Ctrl + Shift + C signals that the content should be sent to the iPhone
+An AutoHotkey script captures the shortcut
+The script executes a PowerShell process silently in the background
+The PowerShell script writes the clipboard content to iCloud Drive it to a shared file located at: iCloud Drive / iClipboard / from_windows.txt
+The AutoHotkey and PowerShell scripts are intentionally small, focused and transparent, and are included in this repository for inspection and customization.
 
-- `Ctrl + Shift + C`  
-  Indicates that the copied content should be sent to the iPhone.
-
-Pressing `Ctrl + Shift + C` triggers a lightweight AutoHotkey automation, which silently executes a PowerShell script in the background.
-
-The PowerShell script reads the current clipboard content and writes it to a shared file located at: iCloud Drive / iClipboard / from_windows.txt
-
-This file acts as the handoff point between Windows and iPhone.
+The .txt file acts as the handoff point between Windows and iPhone.
 
 ---
 
@@ -50,18 +48,6 @@ This provides immediate feedback that the content is now available and ready to 
 
 ---
 
-## Windows automation
-
-On Windows, the continuity experience is enabled through a minimal automation layer built with AutoHotkey and PowerShell.
-
-### Flow overview
-- The user copies text normally using `Ctrl + C`
-- Pressing `Ctrl + Shift + C` signals that the content should be sent to the iPhone
-- An AutoHotkey script captures the shortcut
-- The script executes a PowerShell process silently in the background
-- The PowerShell script writes the clipboard content to iCloud Drive
-
-The AutoHotkey and PowerShell scripts are intentionally small, focused and transparent, and are included in this repository for inspection and customization.
 
 ### Design rationale
 - No servers or network services
