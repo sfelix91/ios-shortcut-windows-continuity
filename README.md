@@ -10,9 +10,9 @@ Coming from the Apple ecosystem, I missed the native Continuity experience avail
 The challenge was to recreate this *experience* in a Windows-based workflow, using lightweight tools and without relying on paid or complex third-party solutions.
 
 ## Solution
-This project combines iOS Shortcuts, iCloud Drive and a small Windows-side automation to create a fast and intentional continuity-like flow between Windows and iPhone.
+This project combines iOS Shortcuts, iCloud Drive and a small Windows-side automation layer to create a fast, intentional and low-friction continuity-like experience between Windows and iPhone.
 
-The solution focuses on reducing cognitive load and interaction cost, allowing text copied on Windows to become immediately available on the iPhone clipboard.
+The solution focuses on minimizing interaction cost and cognitive load, allowing text copied on Windows to become immediately available on the iPhone clipboard.
 
 ## How it works
 
@@ -27,9 +27,11 @@ On Windows, the workflow is driven entirely by keyboard shortcuts:
 - `Ctrl + Shift + C`  
   Indicates that the copied content should be sent to the iPhone.
 
-This shortcut triggers an AutoHotkey script that writes the copied text into a shared file located at: iCloud Drive / iClipboard / from_windows.txt
+Pressing `Ctrl + Shift + C` triggers a lightweight AutoHotkey automation, which silently executes a PowerShell script in the background.
 
-By using iCloud Drive as a shared layer, the solution avoids servers, background services or paid sync tools.
+The PowerShell script reads the current clipboard content and writes it to a shared file located at: iCloud Drive / iClipboard / from_windows.txt
+
+This file acts as the handoff point between Windows and iPhone.
 
 ---
 
@@ -48,15 +50,27 @@ This provides immediate feedback that the content is now available and ready to 
 
 ---
 
-### Design intent
-The goal is not to replicate Apple Continuity technically, but to recreate the *experience*:
-- Fast and intentional interaction
-- Minimal friction
-- No context switching
-- Easy customization
-- No dependency on paid tools
+## Windows automation
 
-The result is a lightweight, reliable and highly adaptable workflow that fits naturally into daily use.
+On Windows, the continuity experience is enabled through a minimal automation layer built with AutoHotkey and PowerShell.
+
+### Flow overview
+- The user copies text normally using `Ctrl + C`
+- Pressing `Ctrl + Shift + C` signals that the content should be sent to the iPhone
+- An AutoHotkey script captures the shortcut
+- The script executes a PowerShell process silently in the background
+- The PowerShell script writes the clipboard content to iCloud Drive
+
+The AutoHotkey and PowerShell scripts are intentionally small, focused and transparent, and are included in this repository for inspection and customization.
+
+### Design rationale
+- No servers or network services
+- No paid tools
+- No persistent background UI
+- Uses native system capabilities
+- Fully customizable and easy to adapt
+
+The goal is not to replicate Apple Continuity technically, but to recreate the *experience*: fast, invisible and intentional.
 
 ## Tools and Technologies
 - iOS Shortcuts
@@ -64,13 +78,15 @@ The result is a lightweight, reliable and highly adaptable workflow that fits na
 - Apple Accessibility (Back Tap)
 - Windows
 - AutoHotkey
+- PowerShell
 
 ## What I learned
 - Designing cross-platform workflows
-- Thinking in terms of experience rather than tools
+- Thinking in terms of user experience rather than tools
 - Reducing friction in everyday operational tasks
 - Leveraging native system capabilities to solve real problems
 
 ## Possible improvements
 - Support for multiple content types (links, formatted text)
 - Bidirectional flow (iPhone → Windows)
+- Context-aware actions based on clipboard content
